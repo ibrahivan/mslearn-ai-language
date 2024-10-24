@@ -1,6 +1,8 @@
 from dotenv import load_dotenv
 import os
 import requests, json
+from azure.ai.translation.text import *
+from azure.ai.translation.text.models import InputTextItem
 
 def main():
     global translator_endpoint
@@ -14,6 +16,10 @@ def main():
         cog_region = os.getenv('COG_SERVICE_REGION')
         translator_endpoint = 'https://api.cognitive.microsofttranslator.com'
 
+     
+        # Create client using endpoint and key
+        credential = TranslatorCredential(translatorKey, translatorRegion)
+        client = TextTranslationClient(credential)
         # Analyze each text file in the reviews folder
         reviews_folder = 'reviews'
         for file_name in os.listdir(reviews_folder):
